@@ -183,9 +183,6 @@ namespace Marymirthulasample1.Controllers
             }
             return View(rt);
         }
-
-
-     
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
