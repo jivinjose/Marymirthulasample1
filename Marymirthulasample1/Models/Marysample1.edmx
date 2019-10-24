@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="marysample1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="marysample1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Register_table">
           <Key>
             <PropertyRef Name="id" />
@@ -17,13 +17,29 @@
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="confirmpassword" Type="varchar" MaxLength="50" />
           <Property Name="address" Type="varchar(max)" />
+          <Property Name="dateofbirth" Type="varchar" MaxLength="50" />
           <Property Name="datex" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Register_table_Register_table">
+          <End Role="Register_table" Type="Self.Register_table" Multiplicity="1" />
+          <End Role="Register_table1" Type="Self.Register_table" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Register_table">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Register_table1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="marysample1ModelStoreContainer">
           <EntitySet Name="Register_table" EntityType="Self.Register_table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Register_table_Register_table" Association="Self.FK_Register_table_Register_table">
+            <End Role="Register_table" EntitySet="Register_table" />
+            <End Role="Register_table1" EntitySet="Register_table" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="marysample1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -40,10 +56,29 @@
           <Property Name="confirmpassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="datex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dateofbirth" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Register_table1" Relationship="marysample1Model.FK_Register_table_Register_table" FromRole="Register_table" ToRole="Register_table1" />
+          <NavigationProperty Name="Register_table2" Relationship="marysample1Model.FK_Register_table_Register_table" FromRole="Register_table1" ToRole="Register_table" />
         </EntityType>
         <EntityContainer Name="marysample1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Register_table" EntityType="Self.Register_table" />
+          <AssociationSet Name="FK_Register_table_Register_table" Association="marysample1Model.FK_Register_table_Register_table">
+            <End Role="Register_table" EntitySet="Register_table" />
+            <End Role="Register_table1" EntitySet="Register_table" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Register_table_Register_table">
+          <End Type="marysample1Model.Register_table" Role="Register_table" Multiplicity="1" />
+          <End Type="marysample1Model.Register_table" Role="Register_table1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Register_table">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Register_table1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +88,7 @@
           <EntitySetMapping Name="Register_table">
             <EntityTypeMapping TypeName="marysample1Model.Register_table">
               <MappingFragment StoreEntitySet="Register_table">
+                <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="email" ColumnName="email" />

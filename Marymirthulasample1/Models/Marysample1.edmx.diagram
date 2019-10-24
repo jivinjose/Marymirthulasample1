@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="9ed7e28a03ca49f4b455d4f4f805ab8d" Name="Diagram1">
         <EntityTypeShape EntityType="marysample1Model.Register_table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="marysample1Model.FK_Register_table_Register_table" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

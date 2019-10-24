@@ -230,6 +230,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Marysample1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Metadata.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Register_table.cs">
       <DependentUpon>Marysample1.tt</DependentUpon>
     </Compile>
