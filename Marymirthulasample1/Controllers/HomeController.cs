@@ -59,7 +59,7 @@ namespace Marymirthulasample1.Controllers
         {
             string userName = form["userName"].ToString();
             string password = form["password"].ToString();
-            var usr = (from u in msample1.Register_table where u.username == userName select u).FirstOrDefault();
+            var usr = msample1.sp_username_Register_table(userName);
             if (usr == null)
             {
                 TempData["Message"] = "username or password is wrong";
@@ -67,13 +67,14 @@ namespace Marymirthulasample1.Controllers
             }
             else
             {
-                var model = msample1.Register_table.Where(x => x.username == userName && x.password == password).SingleOrDefault();
+                var model = msample1.sp_login_Register_table(userName, password); 
                 if (model != null)
                 {
-                    Session["userid"] = usr.id.ToString();
-                    Session["username"] = usr.username.ToString();
-                    FormsAuthentication.SetAuthCookie(usr.username, false);
-                    return RedirectToAction("Homepage", "Home");
+
+                    //Session["userid"] = model.FirstOrDefault();
+                    Session["username"] = model.FirstOrDefault().username.ToList();
+                    FormsAuthentication.SetAuthCookie(userName, false);
+                    return RedirectToAction("storedHomepage", "Home");
                 }
                 else
                 {
@@ -96,6 +97,22 @@ namespace Marymirthulasample1.Controllers
             ViewData["Name"] = usr;
           
             var Homelist = (from sub in msample1.Register_table orderby sub.id descending select sub).ToList();
+            return View(Homelist);
+        }
+
+
+        public ActionResult storedHomepage()
+        {
+            if (Session["username"] == null)
+            {
+                TempData["Message"] = "You Have To Login !!!!";
+                return this.RedirectToAction("Login", "Home");
+            }
+            var userName = Session["username"].ToString();
+            var usr = (from u in msample1.Register_table where u.username == userName select u.name).FirstOrDefault();
+            ViewData["Name"] = usr;
+
+            var Homelist = msample1.sp_list_Register_table();
             return View(Homelist);
         }
 

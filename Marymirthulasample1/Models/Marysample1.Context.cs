@@ -12,6 +12,8 @@ namespace Marymirthulasample1.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class marysample1Entities : DbContext
     {
@@ -26,5 +28,32 @@ namespace Marymirthulasample1.Models
         }
     
         public virtual DbSet<Register_table> Register_table { get; set; }
+    
+        public virtual ObjectResult<sp_list_Register_table_Result> sp_list_Register_table()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_list_Register_table_Result>("sp_list_Register_table");
+        }
+    
+        public virtual ObjectResult<string> sp_username_Register_table(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_username_Register_table", usernameParameter);
+        }
+    
+        public virtual ObjectResult<sp_login_Register_table_Result> sp_login_Register_table(string username, string password)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_login_Register_table_Result>("sp_login_Register_table", usernameParameter, passwordParameter);
+        }
     }
 }

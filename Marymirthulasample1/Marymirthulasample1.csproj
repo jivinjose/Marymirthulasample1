@@ -235,6 +235,12 @@
     <Compile Include="Models\Register_table.cs">
       <DependentUpon>Marysample1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_list_Register_table_Result.cs">
+      <DependentUpon>Marysample1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_login_Register_table_Result.cs">
+      <DependentUpon>Marysample1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +258,7 @@
     </Content>
     <Content Include="Views\shared\_LayoutHome1.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\storedHomepage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

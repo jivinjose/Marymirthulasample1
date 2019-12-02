@@ -32,6 +32,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_list_Register_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_login_Register_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_username_Register_table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="marysample1ModelStoreContainer">
           <EntitySet Name="Register_table" EntityType="Self.Register_table" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Register_table_Register_table" Association="Self.FK_Register_table_Register_table">
@@ -66,6 +74,14 @@
             <End Role="Register_table" EntitySet="Register_table" />
             <End Role="Register_table1" EntitySet="Register_table" />
           </AssociationSet>
+          <FunctionImport Name="sp_list_Register_table" ReturnType="Collection(marysample1Model.sp_list_Register_table_Result)" />
+          <FunctionImport Name="sp_username_Register_table" ReturnType="Collection(String)">
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_login_Register_table" ReturnType="Collection(marysample1Model.sp_login_Register_table_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Register_table_Register_table">
           <End Type="marysample1Model.Register_table" Role="Register_table" Multiplicity="1" />
@@ -79,6 +95,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_list_Register_table_Result">
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="phone" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="address" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_login_Register_table_Result">
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -101,6 +127,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_list_Register_table" FunctionName="marysample1Model.Store.sp_list_Register_table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="marysample1Model.sp_list_Register_table_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_username_Register_table" FunctionName="marysample1Model.Store.sp_username_Register_table" />
+          <FunctionImportMapping FunctionImportName="sp_login_Register_table" FunctionName="marysample1Model.Store.sp_login_Register_table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="marysample1Model.sp_login_Register_table_Result">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
